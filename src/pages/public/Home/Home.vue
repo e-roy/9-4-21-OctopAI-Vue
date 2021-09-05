@@ -2,8 +2,8 @@
   <div class="m-4 sm:px-8 md:px-12 lg:px-24">
     <Logo />
     <UserQuestionInput />
-    <UploadText />
-    <ProcessData />
+    <UploadText v-if="userQuestion" />
+    <ProcessData v-if="userQuestion && userTranscript" />
   </div>
 </template>
 

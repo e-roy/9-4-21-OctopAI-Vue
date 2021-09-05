@@ -135,7 +135,7 @@
           </div>
         </div>
         <div class="w-1/2 p-2">
-          <div class="text-gray-700 font-semibold">Pros</div>
+          <div class="text-gray-700 font-semibold">Cons</div>
           <div v-for="data in negativeData" :key="data.id">
             <div
               class="my-4 mx-1 p-2 border-2 border-sub rounded text-gray-700"
