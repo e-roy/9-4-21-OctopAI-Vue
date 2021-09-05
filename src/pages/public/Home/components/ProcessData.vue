@@ -22,58 +22,19 @@
 </template>
 
 <script>
-import firebase from "@/services/_firebase";
 import { mapGetters, mapActions } from "vuex";
 import getGPTdata from "../composables/getGPTdata";
 
 export default {
-  data: () => ({
-    positiveDataPrompt: {
-      title:
-        "Search the following transcript for positive sentences.\n###\nTranscript: ",
-      footer: "###\nList of positive sentences in transcript :\n1.",
-    },
-    negativeDataPrompt: {
-      title:
-        "Search the following transcript for negative sentences.\n###\nTranscript: ",
-      footer: "###\nList of negative sentences in transcript :\n1.",
-    },
-  }),
+  data: () => ({}),
   components: {},
   created() {},
   mounted() {},
   methods: {
     ...mapActions(["setReturnData"]),
     goToResults() {
-      // this.processData();
       getGPTdata();
       this.$router.push({ name: "Results" });
-    },
-    processData() {
-      let prompt =
-        this.positiveDataPrompt.title +
-        this.userTranscript +
-        this.positiveDataPrompt.footer;
-      let data = {
-        engine: "curie",
-        prompt: prompt,
-        maxTokens: 500,
-        temperature: 0.9,
-        topP: 1,
-        presencePenalty: 0,
-        frequencyPenalty: 0,
-        bestOf: 3,
-        n: 1,
-        stream: false,
-        stop: ["###"],
-      };
-      // console.log(data);
-      const GPT3Request = firebase.functions().httpsCallable("GPT3Request");
-      GPT3Request(data).then((response) => {
-        // console.log(response);
-        // console.log(response.data.choices[0].text);
-        this.setReturnData(response.data.choices[0].text);
-      });
     },
   },
   computed: {

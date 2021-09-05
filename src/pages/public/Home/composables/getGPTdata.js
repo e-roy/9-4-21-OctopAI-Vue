@@ -15,12 +15,12 @@ const negativeDataPrompt = {
 const dataConst = {
   engine: "curie",
   prompt: "",
-  maxTokens: 500,
+  maxTokens: 600,
   temperature: 0.9,
   topP: 1,
   presencePenalty: 0,
-  frequencyPenalty: 0,
-  bestOf: 3,
+  frequencyPenalty: 0.8,
+  bestOf: 1,
   n: 1,
   stream: false,
   stop: ["###"],
@@ -41,7 +41,10 @@ const positiveData = () => {
   let data = { ...dataConst, prompt };
   const GPT3Request = firebase.functions().httpsCallable("GPT3Request");
   GPT3Request(data).then((response) => {
-    store.dispatch("setNegativeData", response.data.choices[0].text);
+    store.dispatch(
+      "setNegativeData",
+      getSentences(response.data.choices[0].text)
+    );
   });
 };
 
@@ -53,6 +56,18 @@ const negativeData = () => {
   let data = { ...dataConst, prompt };
   const GPT3Request = firebase.functions().httpsCallable("GPT3Request");
   GPT3Request(data).then((response) => {
-    store.dispatch("setPositiveData", response.data.choices[0].text);
+    store.dispatch(
+      "setPositiveData",
+      getSentences(response.data.choices[0].text)
+    );
   });
+};
+
+const getSentences = (transcript) => {
+  let sentences = transcript.split("\n");
+  for (let i = 0; i < sentences.length; i++) {
+    sentences[i] = sentences[i].replace(/\d+\./g, "");
+    sentences[i] = sentences[i].replace(/\\/g, "");
+  }
+  return sentences;
 };
