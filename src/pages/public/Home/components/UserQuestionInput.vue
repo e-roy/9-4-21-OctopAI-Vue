@@ -8,6 +8,9 @@
       </div>
       <div class="p-2 mx-2 font-bold text-gray-700">
         Add Your User Interview Question.
+        <span class="ml-10 text-sm text-gray-600"
+          >(your sentence must end with a ?)</span
+        >
       </div>
     </div>
     <div

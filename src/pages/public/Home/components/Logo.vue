@@ -4,7 +4,7 @@
       <img src="../../images/OctopAI_logo.png" alt="logo" class="w-72" />
     </div>
     <div className="text-center justify-center text-gray-700">
-      One-liner of what OctopAI is
+      An intelligent way to analyze your user interviews.
     </div>
   </div>
 </template>

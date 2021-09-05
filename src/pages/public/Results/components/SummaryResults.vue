@@ -126,6 +126,12 @@
       <div class="flex">
         <div class="w-1/2 p-2">
           <div class="text-gray-700 font-semibold">Pros</div>
+          <div
+            v-if="positiveData.length < 1"
+            class="flex pl-20 text-gray-500 text-center justify-center font-medium text-xl mt-4"
+          >
+            Loading... <span class="spinner" />
+          </div>
           <div v-for="data in positiveData" :key="data.id">
             <div
               class="my-4 mx-1 p-2 border-2 border-sub rounded text-gray-700"
@@ -136,6 +142,12 @@
         </div>
         <div class="w-1/2 p-2">
           <div class="text-gray-700 font-semibold">Cons</div>
+          <div
+            v-if="negativeData.length < 1"
+            class="flex pl-20 text-gray-500 text-center justify-center font-medium text-xl mt-4"
+          >
+            Loading... <span class="spinner" />
+          </div>
           <div v-for="data in negativeData" :key="data.id">
             <div
               class="my-4 mx-1 p-2 border-2 border-sub rounded text-gray-700"
@@ -180,4 +192,24 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.spinner {
+  display: block;
+  margin: auto;
+  height: 1.5em;
+  width: 1.5em;
+  border: 6px solid rgba(0, 174, 239, 0.2);
+  border-top-color: rgba(0, 174, 239, 0.8);
+  border-radius: 50%;
+  animation: rotation 0.6s infinite linear;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+</style>

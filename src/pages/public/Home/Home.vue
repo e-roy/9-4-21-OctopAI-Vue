@@ -2,8 +2,10 @@
   <div class="m-4 sm:px-8 md:px-12 lg:px-24">
     <Logo />
     <UserQuestionInput />
-    <UploadText v-if="userQuestion" />
-    <ProcessData v-if="userQuestion && userTranscript" />
+    <UploadText v-if="userQuestion.slice(-1) === '?'" />
+    <ProcessData
+      v-if="userQuestion.slice(-1) === '?' && userTranscript.length > 50"
+    />
   </div>
 </template>
 
