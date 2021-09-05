@@ -7,8 +7,9 @@
           class="flex justify-between py-1 px-2 w-full border border-main rounded-xl"
         >
           <input
+            v-model="search"
             class="w-3/4 bg-transparent outline-none px-2 placeholder-gray-700"
-            placeholder="Search"
+            placeholder="Keyword Search"
           />
           <div class="bg-sub rounded-lg py-2 px-3">
             <svg
@@ -70,8 +71,8 @@
           </div>
         </div>
       </div>
-      <div class="border-b border-gray-300 mx-6 my-6 py-4">tags</div>
-      <div class="flex justify-between px-4">
+      <!-- <div class="border-b border-gray-300 mx-6 my-6 py-4">tags</div> -->
+      <div class="flex justify-between px-4 pt-8">
         <div class="font-semibold text-gray-700 py-1">
           Results<span class="pl-4">{{ totalResults }}</span>
         </div>
@@ -132,7 +133,7 @@
           >
             Loading... <span class="spinner" />
           </div>
-          <div v-for="data in positiveData" :key="data.id">
+          <div v-for="data in searchPositive" :key="data.id">
             <div
               class="my-4 mx-1 p-2 border-2 border-sub rounded text-gray-700"
             >
@@ -148,7 +149,7 @@
           >
             Loading... <span class="spinner" />
           </div>
-          <div v-for="data in negativeData" :key="data.id">
+          <div v-for="data in searchNegative" :key="data.id">
             <div
               class="my-4 mx-1 p-2 border-2 border-sub rounded text-gray-700"
             >
@@ -168,6 +169,9 @@ export default {
   data: () => ({
     totalResults: 0,
     showPerPage: 0,
+    searchPositive: [],
+    searchNegative: [],
+    search: "",
   }),
   components: {},
   created() {},
@@ -181,12 +185,28 @@ export default {
   },
   watch: {
     positiveData() {
+      this.searchPositive = this.positiveData;
       this.totalResults = this.positiveData.length + this.negativeData.length;
       this.showPerPage = this.positiveData.length + this.negativeData.length;
     },
     negativeData() {
+      this.searchNegative = this.negativeData;
       this.totalResults = this.positiveData.length + this.negativeData.length;
       this.showPerPage = this.positiveData.length + this.negativeData.length;
+    },
+    search() {
+      if (this.search.length > 0) {
+        this.searchPositive = this.search
+          ? this.positiveData.filter((data) => {
+              return data.toLowerCase().includes(this.search.toLowerCase());
+            })
+          : this.positiveData;
+        this.searchNegative = this.search
+          ? this.negativeData.filter((data) => {
+              return data.toLowerCase().includes(this.search.toLowerCase());
+            })
+          : this.negativeData;
+      }
     },
   },
 };
@@ -198,10 +218,10 @@ export default {
   margin: auto;
   height: 1.5em;
   width: 1.5em;
-  border: 6px solid rgba(0, 174, 239, 0.2);
-  border-top-color: rgba(0, 174, 239, 0.8);
+  border: 6px solid rgba(17, 62, 93, 0.2);
+  border-top-color: rgba(17, 62, 93, 0.8);
   border-radius: 50%;
-  animation: rotation 0.6s infinite linear;
+  animation: rotation 0.8s infinite linear;
 }
 
 @keyframes rotation {

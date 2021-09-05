@@ -18,7 +18,7 @@
         <textarea
           v-model="setTranscript"
           class="w-full h-full rounded-lg bg-main placeholder-gray-300 resize-none outline-none p-2"
-          rows="14"
+          rows="10"
           placeholder="Paste Transcript Here"
           :class="userInputObject"
         />

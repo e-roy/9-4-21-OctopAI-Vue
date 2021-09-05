@@ -2,23 +2,25 @@ import { store } from "@/store";
 import firebase from "@/services/_firebase";
 
 const positiveDataPrompt = {
-  title:
-    "Search the following transcript for positive sentences.\n###\nTranscript: ",
-  footer: "\n###\nList of positive sentences in transcript :\n1.",
+  header:
+    "Search the following transcript for positive sentences within the following transcript only.\n###\ntranscript: ",
+  footer:
+    "\n###\nNumbered list of single positive sentences in above transcript :\n1.",
 };
 const negativeDataPrompt = {
-  title:
-    "Search the following transcript for negative sentences.\n###\nTranscript: ",
-  footer: "\n###\nList of negative sentences in transcript :\n1.",
+  header:
+    "Search the following transcript for negative sentences within the following transcript only.\n###\ntranscript: ",
+  footer:
+    "\n###\nNumbered list of single negative sentences in above transcript :\n1.",
 };
 
 const dataConst = {
-  engine: "curie",
+  engine: "curie-instruct-beta",
   prompt: "",
   maxTokens: 600,
   temperature: 0.9,
   topP: 1,
-  presencePenalty: 0,
+  presencePenalty: 0.4,
   frequencyPenalty: 0.8,
   bestOf: 1,
   n: 1,
@@ -35,7 +37,7 @@ export default getGPTdata;
 
 const positiveData = () => {
   let prompt =
-    positiveDataPrompt.title +
+    positiveDataPrompt.header +
     store.getters["userTranscript"] +
     positiveDataPrompt.footer;
   let data = { ...dataConst, prompt };
@@ -50,7 +52,7 @@ const positiveData = () => {
 
 const negativeData = () => {
   let prompt =
-    negativeDataPrompt.title +
+    negativeDataPrompt.header +
     store.getters["userTranscript"] +
     negativeDataPrompt.footer;
   let data = { ...dataConst, prompt };
